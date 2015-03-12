@@ -1,6 +1,6 @@
 # agp-ajax-taxonomy-filter
 
-AGP Ajax Taxonomy Filter. 
+Simple Ajax Taxonomy Filter
 
 # Installation
 
