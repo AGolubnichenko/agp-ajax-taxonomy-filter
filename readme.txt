@@ -1,6 +1,6 @@
 === AGP Ajax Taxonomy Filter ===
 Contributors: Alexey Golubnichenko
-Tags: agp, ajax, taxonomy, category, filter
+Tags: agp, ajax, taxonomy, category, filter, widget
 Requires at least: 3.5.0
 Tested up to: 4.1
 License: GPLv2 or later
