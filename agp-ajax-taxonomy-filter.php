@@ -2,7 +2,7 @@
 /**
  * Plugin Name: AGP Ajax Taxonomy Filter
  * Plugin URI: https://github.com/AGolubnichenko/agp-ajax-taxonomy-filter 
- * Description: Simple Ajax Taxonomy Filter
+ * Description: A plugin for WordPress that let you filter posts by taxonomies
  * Version: 1.0.0
  * Author: Alexey Golubnichenko
  * Author URI: https://github.com/AGolubnichenko
@@ -37,28 +37,35 @@ function atf_output_buffer() {
     ob_start();
 }
 
-if ( ! empty ( $GLOBALS['pagenow'] ) && 'plugins.php' === $GLOBALS['pagenow'] ) {
-    add_action( 'admin_notices', 'atf_check_admin_notices', 0 );
-}
+if (file_exists(dirname(__FILE__) . '/agp-core/agp-core.php' )) {
+    include_once (dirname(__FILE__) . '/agp-core/agp-core.php' );
+} 
 
-function atf_check_admin_notices() {
-    if (!class_exists('Agp_Autoloader')) {
-        unset( $_GET['activate'] );
-        $name = get_file_data( __FILE__, array ( 'Plugin Name' ), 'plugin' );
-        printf(
-            '<div class="error">
-                <p><i><a target="_blank" href="https://github.com/AGolubnichenko/agp-core" title="AGP Plugins Core">AGP Plugins Core</a></i> not installed</p>
-                <p><i>%1$s</i> has been deactivated.</p>
-            </div>',
-            $name[0]
-        );
-        deactivate_plugins( plugin_basename( __FILE__ ) );                
+if (!class_exists('Agp_Autoloader')) {
+    global $pagenow;
+    if ( !empty($pagenow) && 'plugins.php' === $pagenow ) {
+        add_action( 'admin_notices', 'atf_check_admin_notices', 0 );
     }
+
+    function atf_check_admin_notices() {
+        if (!class_exists('Agp_Autoloader')) {
+            unset( $_GET['activate'] );
+            $name = get_file_data( __FILE__, array ( 'Plugin Name' ), 'plugin' );
+            printf(
+                '<div class="error">
+                    <p><i><a target="_blank" href="https://github.com/AGolubnichenko/agp-core" title="AGP Plugins Core">AGP Plugins Core</a></i> not installed</p>
+                    <p><i>%1$s</i> has been deactivated.</p>
+                </div>',
+                $name[0]
+            );
+            deactivate_plugins( plugin_basename( __FILE__ ) );                
+        }
+    }    
 }
 
 add_action( 'plugins_loaded', 'atf_activate_plugin' );
 function atf_activate_plugin() {
-    if (class_exists('Agp_Autoloader')) {
+    if (class_exists('Agp_Autoloader') && !function_exists('Atf')) {
         $autoloader = Agp_Autoloader::instance();
         $autoloader->setClassMap(array(
             __DIR__ => array('classes')

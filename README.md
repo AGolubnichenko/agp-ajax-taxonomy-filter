@@ -1,10 +1,10 @@
 # agp-ajax-taxonomy-filter
 
-Simple Ajax Taxonomy Filter
+A plugin for WordPress that let you filter posts by taxonomies
 
 # Installation
 
-1. Install or include in a theme 'AGP Plugins Core' plugin
+1. Download a copy of the plugin
 2. Unzip and Upload 'AGP Ajax Taxonomy Filter' to a sub directory in "/wp-content/plugins/".
 3. Activate the plugins through the 'Plugins' menu in WordPress.
 4. Add 'AGP Ajax Taxonomy Filter' widget to Your sidebar via 'Appearance' > 'Widgets' menu in WordPress.

@@ -5,16 +5,17 @@ Requires at least: 3.5.0
 Tested up to: 4.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
-
-AGP Plugins Core based plugin
-
-== Description ==
+Stable tag: trunk
 
 Simple Ajax Taxonomy Filter
 
+== Description ==
+
+A plugin for WordPress that let you filter posts by taxonomies
+
 == Installation ==
 
-1. Install or include in a theme 'AGP Plugins Core' plugin
+1. Download a copy of the plugin
 2. Unzip and Upload 'AGP Ajax Taxonomy Filter' to a sub directory in "/wp-content/plugins/".
 3. Activate the plugins through the 'Plugins' menu in WordPress.
 4. Add 'AGP Ajax Taxonomy Filter' widget to Your sidebar via 'Appearance' > 'Widgets' menu in WordPress.
