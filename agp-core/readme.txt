@@ -1,12 +1,3 @@
-=== AGP Plugins Core ===
-Contributors: Alexey Golubnichenko
-Tags: agp, custom, plugin, theme, classes
-Requires at least: 3.5.0
-Tested up to: 4.1
-License: GPLv2 or later
-License URI: http://www.gnu.org/licenses/gpl-2.0.html
-Stable tag: trunk
-
 Collection of a base classes for custom WordPress plugins
 
 == Description ==

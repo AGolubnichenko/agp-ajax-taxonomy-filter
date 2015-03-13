@@ -1,17 +1,4 @@
 <?php
-/**
- * Plugin Name: AGP Plugins Core
- * Plugin URI: https://github.com/AGolubnichenko/agp-core
- * Description: Collection of a base classes for custom WordPress plugins
- * Version: 1.0.0
- * Author: Alexey Golubnichenko
- * Author URI: https://github.com/AGolubnichenko
- * License: GPL2
- * 
- * @package Agp
- * @category Core
- * @author Alexey Golubnichenko
- */
 /*  Copyright 2015  Alexey Golubnichenko  (email : profosbox@gmail.com)
 
     This program is free software; you can redistribute it and/or modify
