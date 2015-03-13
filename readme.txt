@@ -11,7 +11,7 @@ Simple Ajax Taxonomy Filter
 
 == Description ==
 
-A plugin for WordPress that let you filter posts by taxonomies
+A plugin for WordPress that let you filter posts by taxonomies with AJAX
 
 == Installation ==
 

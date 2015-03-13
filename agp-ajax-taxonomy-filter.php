@@ -2,7 +2,7 @@
 /**
  * Plugin Name: AGP Ajax Taxonomy Filter
  * Plugin URI: https://github.com/AGolubnichenko/agp-ajax-taxonomy-filter 
- * Description: A plugin for WordPress that let you filter posts by taxonomies
+ * Description: A plugin for WordPress that let you filter posts by taxonomies with AJAX
  * Version: 1.0.0
  * Author: Alexey Golubnichenko
  * Author URI: https://github.com/AGolubnichenko
