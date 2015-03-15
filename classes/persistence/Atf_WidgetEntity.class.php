@@ -26,7 +26,7 @@ class Atf_WidgetEntity extends Agp_Entity {
         $this->settings = new Atf_WidgetSettingsEntity($this->settings);
         $this->taxonomyRepository = new Atf_TaxonomyRepository();
         $this->taxonomyRepository->setName($this->getId());
-        if (!empty($this->settings->getTaxonomy()) && taxonomy_exists($this->settings->getTaxonomy())) {
+        if ($this->settings->getTaxonomy() && taxonomy_exists($this->settings->getTaxonomy())) {
             $this->taxonomyRepository->refreshRepository($this->settings->getTaxonomy());    
         }
     }
