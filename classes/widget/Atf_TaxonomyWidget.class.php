@@ -20,14 +20,14 @@ class Atf_TaxonomyWidget extends WP_Widget {
 	 * @param array $instance
 	 */
 	public function widget( $args, $instance ) {
-        if  (!$instance['is_ajax'] || is_post_type_archive($instance['post_type'])) {
+        //if  (!$instance['is_ajax'] || is_post_type_archive($instance['post_type'])) {
             echo $args['before_widget'];
             if (!empty( $instance['title'])) {
                 echo $args['before_title'] . apply_filters( 'widget_title', $instance['title'] ). $args['after_title'];
             }
             echo Atf()->getTemplate('atf', $this->id);                
             echo $args['after_widget'];
-        }
+        //}
 	}
 
 	/**
@@ -129,7 +129,7 @@ class Atf_TaxonomyWidget extends WP_Widget {
     public function renderIsAjaxField($is_ajax) {
     ?>
         <input id="<?php echo esc_attr( $this->get_field_id( 'is_ajax' ) ); ?>" class="checkbox is_ajax_select" type="checkbox" name="<?php echo esc_attr( $this->get_field_name( 'is_ajax' ) ); ?>"<?php checked( $is_ajax ); ?>>
-        <label for="<?php echo esc_attr( $this->get_field_id( 'is_ajax' ) ); ?>"><?php _e( 'Ajax' ); ?></label>        
+        <label for="<?php echo esc_attr( $this->get_field_id( 'is_ajax' ) ); ?>"><?php _e( 'Ajax  (It works only for custom post type archive)' ); ?></label>        
     <?php    
     }
     
