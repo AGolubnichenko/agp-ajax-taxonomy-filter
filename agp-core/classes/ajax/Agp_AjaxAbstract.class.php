@@ -7,7 +7,7 @@ abstract class Agp_AjaxAbstract {
      */
     public function __construct() {
         foreach (get_class_methods($this) as $action) {
-            if ( !in_array($action, ['__construct', 'request', 'response' ]) ) {
+            if ( !in_array($action, array('__construct', 'request', 'response' )) ) {
                 add_action( "wp_ajax_$action" , array($this, 'request') );
                 add_action( "wp_ajax_nopriv_$action", array($this, 'request'));
             }
