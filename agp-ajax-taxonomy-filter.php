@@ -3,7 +3,7 @@
  * Plugin Name: AGP Ajax Taxonomy Filter
  * Plugin URI: https://github.com/AGolubnichenko/agp-ajax-taxonomy-filter 
  * Description: A plugin for WordPress that let you filter posts by taxonomies with AJAX
- * Version: 1.0.1
+ * Version: 1.0.2
  * Author: Alexey Golubnichenko
  * Author URI: https://github.com/AGolubnichenko
  * License: GPL2
@@ -68,7 +68,7 @@ function atf_activate_plugin() {
     if (class_exists('Agp_Autoloader') && !function_exists('Atf')) {
         $autoloader = Agp_Autoloader::instance();
         $autoloader->setClassMap(array(
-            __DIR__ => array('classes')
+            __DIR__ => array('classes', 'agp-core'),
         ));
 
         function Atf() {
