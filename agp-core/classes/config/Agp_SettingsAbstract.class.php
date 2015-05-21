@@ -274,7 +274,7 @@ abstract class Agp_SettingsAbstract extends Agp_ConfigAbstract {
 
         global $pagenow;
 
-        if ( $pagenow == 'admin.php' && isset($_REQUEST['is-reset']) && !isset($_REQUEST['settings-updated'])) {
+        if ( $pagenow == 'admin.php' && isset($_REQUEST['is-reset']) && !isset($_REQUEST['settings-updated']) && $_REQUEST['page'] == $this->page) {
             $message = 'Settings reset to default values';
             echo '<div class="updated settings-error" id="setting-error-settings_updated"><p><strong>'.$message.'</strong></p></div>';            
         }
