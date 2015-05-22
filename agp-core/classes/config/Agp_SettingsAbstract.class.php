@@ -1,42 +1,15 @@
 <?php
-/**
- * Settings page abstract class
- */
+
 abstract class Agp_SettingsAbstract extends Agp_ConfigAbstract {
     
-    /**
-     * Current page
-     * 
-     * @var striqng 
-     */
     private $page;
     
-    /** 
-     * Tabs
-     * 
-     * @var array
-     */
     private $tabs;
     
-    /**
-     * Fields 
-     * 
-     * @var array
-     */
     private $fields;
     
-    /**
-     * Field Sets
-     * 
-     * @var array
-     */
     private $fieldSet;
     
-    /**
-     * Current plugin settings
-     * 
-     * @var array
-     */
     private $settings;
     
     
@@ -62,16 +35,13 @@ abstract class Agp_SettingsAbstract extends Agp_ConfigAbstract {
             $this->fieldSet = $this->objectToArray($this->getConfig()->admin->options->fieldSet);
         }                            
        
-        $this->settings = $this->getOptions();
+        $this->settings = $this->_getSettings();
         
         add_action( 'admin_init', array( $this, 'registerSettings' ) );        
         add_action( 'admin_menu', array( $this, 'adminMenu' ) ); 
         add_action( 'admin_notices', array( $this, 'customAdminNotices' ) ); 
     }
 
-    /**
-     * Create menu
-     */
     public function adminMenu() {
         if (!empty($this->getConfig()->admin->menu)) {
             foreach ($this->getConfig()->admin->menu as $menu_slug => $page) {
@@ -91,11 +61,6 @@ abstract class Agp_SettingsAbstract extends Agp_ConfigAbstract {
         }
     }
     
-    /**
-     * Register settings
-     * 
-     * @global string $pagenow
-     */
     public function registerSettings () {
         if ($this->getTabs()) {        
             foreach ($this->getTabs() as $key => $value) {
@@ -105,18 +70,12 @@ abstract class Agp_SettingsAbstract extends Agp_ConfigAbstract {
         }    
         
         global $pagenow;
-        if($pagenow == 'admin.php' && !empty($_REQUEST['page']) && $_REQUEST['page'] == $this->page && !empty($_REQUEST['reset-settings'])) {
+        if($pagenow == 'admin.php' && !empty($_REQUEST['page']) && $_REQUEST['page'] == 'wcp-weather' && !empty($_REQUEST['reset-settings'])) {
             $this->resetSettings();
             wp_redirect(add_query_arg(array('is-reset' => 'true'), remove_query_arg('reset-settings')));
         }
     }
     
-    /**
-     * Sanitixe settings
-     * 
-     * @param array $input
-     * @return array
-     */
     public function sanitizeSettings($input) {
         if (!empty($input) && is_array($input)) {
             foreach ($input as $key => $value) {
@@ -142,12 +101,6 @@ abstract class Agp_SettingsAbstract extends Agp_ConfigAbstract {
         return $input;
     }
     
-    /**
-     * Get field settings by name
-     * 
-     * @param string $fieldName
-     * @return array
-     */
     public function getFieldByName ($fieldName) {
         foreach($this->fields as $tab => $settings) {
             if (!empty($settings['fields'][$fieldName])) {
@@ -156,9 +109,6 @@ abstract class Agp_SettingsAbstract extends Agp_ConfigAbstract {
         }
     }
     
-    /**
-     * Reset settings to default values
-     */
     public function resetSettings () {
         if ($this->getTabs()) {        
             foreach ($this->getTabs() as $key => $value) {
@@ -167,12 +117,7 @@ abstract class Agp_SettingsAbstract extends Agp_ConfigAbstract {
         }         
     }
     
-    /**
-     * Gets saved or default options
-     * 
-     * @return array
-     */
-    public function getOptions() {
+    private function _getOptions () {
         $fields = $this->getFields();        
         
         $result = array();
@@ -181,48 +126,54 @@ abstract class Agp_SettingsAbstract extends Agp_ConfigAbstract {
                 if (!empty($fields[$k])) {
                     foreach ($fields[$k]['fields'] as $dk => $dv) {
                         $options = get_option( $k );
+
                         if (!empty($options)) {
                             if ( isset( $options[$dk] ) ) {
                                 $result[$k][$dk] = $options[$dk];                                
-                            } elseif ( isset ( $dv['default'] ) ) {
-                                $result[$k][$dk] = $dv['default'];
-                            }   
-                        } else {
-                            if ( isset ( $dv['default'] ) ) {
-                                $result[$k][$dk] = $dv['default'];
-                            }                               
+                            }
                         }
                     }                    
                 }
             }    
         } 
         return $result;
+    }    
+    
+    private function _getDefaultOptions() {
+        $fields = $this->getFields();        
+        
+        $result = array();
+        if ($this->getTabs()) {        
+            foreach ($this->getTabs() as $k => $v) {
+                if (!empty($fields[$k])) {
+                    foreach ($fields[$k]['fields'] as $dk => $dv) {
+                        if ( isset ( $dv['default'] ) ) {
+                            $result[$k][$dk] = $dv['default'];
+                        }
+                    }  
+                    update_option( $k, $result[$k] ); 
+                }
+            }    
+        } 
+        return $result;        
     }
     
-    /**
-     * Page getter
-     * 
-     * @return string
-     */
+    private function _getSettings() {
+        $result = $this->_getOptions();
+        if ( empty($result) ) {
+            $result = $this->_getDefaultOptions();
+        }
+        return $result;
+    }
+    
     public function getPage() {
         return $this->page;
     }
 
-    /**
-     * Tabs getter
-     * 
-     * @return array
-     */
     public function getTabs() {
         return $this->tabs;
     }
 
-    /**
-     * Fields getter
-     * 
-     * @param string $key
-     * @return array
-     */
     public function getFields($key = NULL) {
         if (!empty($key)) {
             if (!empty($this->fields[$key])) {
@@ -233,12 +184,6 @@ abstract class Agp_SettingsAbstract extends Agp_ConfigAbstract {
         }                
     }
 
-    /**
-     * FielSet getter 
-     * 
-     * @param string $key
-     * @return array
-     */
     public function getFieldSet($key = NULL) {
         if (!empty($key)) {
             if (!empty($this->fieldSet[$key])) {
@@ -249,12 +194,6 @@ abstract class Agp_SettingsAbstract extends Agp_ConfigAbstract {
         }                        
     }
 
-    /**
-     * Settings getter
-     * 
-     * @param string $key
-     * @return array
-     */
     public function getSettings($key = NULL) {
         if (!empty($key)) {
             if (!empty($this->settings[$key])) {
@@ -265,16 +204,11 @@ abstract class Agp_SettingsAbstract extends Agp_ConfigAbstract {
         }        
     }
     
-    /**
-     * Custom Notices
-     * 
-     * @global string $pagenow
-     */
     public function customAdminNotices() {
 
         global $pagenow;
 
-        if ( $pagenow == 'admin.php' && isset($_REQUEST['is-reset']) && !isset($_REQUEST['settings-updated']) && $_REQUEST['page'] == $this->page) {
+        if ( $pagenow == 'admin.php' && isset($_REQUEST['is-reset']) && !isset($_REQUEST['settings-updated'])) {
             $message = 'Settings reset to default values';
             echo '<div class="updated settings-error" id="setting-error-settings_updated"><p><strong>'.$message.'</strong></p></div>';            
         }

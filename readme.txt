@@ -47,6 +47,9 @@ Path to the styles inside the active theme:
 
 == Changelog ==
 
+= 1.1.0 =
+* Global changes of the plugin core;
+
 = 1.0.2 =
 * Minor changes of the plugin core
 
