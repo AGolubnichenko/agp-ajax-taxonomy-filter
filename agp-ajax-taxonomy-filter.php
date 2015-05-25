@@ -27,6 +27,7 @@
     along with this program; if not, write to the Free Software
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
+use Agp\AjaxTaxonomyFilter\Core\Agp_Autoloader;
 
 if (!defined('ABSPATH')) {
     exit;
@@ -41,36 +42,19 @@ if (file_exists(dirname(__FILE__) . '/agp-core/agp-core.php' )) {
     include_once (dirname(__FILE__) . '/agp-core/agp-core.php' );
 } 
 
-if (!class_exists('Agp_Autoloader')) {
-    global $pagenow;
-    if ( !empty($pagenow) && 'plugins.php' === $pagenow ) {
-        add_action( 'admin_notices', 'atf_check_admin_notices', 0 );
-    }
-
-    function atf_check_admin_notices() {
-        if (!class_exists('Agp_Autoloader')) {
-            unset( $_GET['activate'] );
-            $name = get_file_data( __FILE__, array ( 'Plugin Name' ), 'plugin' );
-            printf(
-                '<div class="error">
-                    <p><i><a target="_blank" href="https://github.com/AGolubnichenko/agp-core" title="AGP Plugins Core">AGP Plugins Core</a></i> not installed</p>
-                    <p><i>%1$s</i> has been deactivated.</p>
-                </div>',
-                $name[0]
-            );
-            deactivate_plugins( plugin_basename( __FILE__ ) );                
-        }
-    }    
-}
-
 add_action( 'plugins_loaded', 'atf_activate_plugin' );
 function atf_activate_plugin() {
-    if (class_exists('Agp_Autoloader') && !function_exists('Atf')) {
+    if (class_exists('Agp\AjaxTaxonomyFilter\Core\Agp_Autoloader') && !function_exists('Atf')) {
         $autoloader = Agp_Autoloader::instance();
         $autoloader->setClassMap(array(
-            __DIR__ => array('classes', 'agp-core'),
+            __DIR__ => array('classes'),
+            'namespaces' => array(
+                'Agp\AjaxTaxonomyFilter\Core' => array(
+                    __DIR__ => array('agp-core'),
+                ),
+            ),
         ));
-
+        
         function Atf() {
             return Atf::instance();
         }    

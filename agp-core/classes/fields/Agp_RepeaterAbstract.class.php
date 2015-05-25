@@ -1,4 +1,5 @@
 <?php
+namespace Agp\AjaxTaxonomyFilter\Core;
 
 abstract class Agp_RepeaterAbstract extends Agp_Module {
     

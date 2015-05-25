@@ -1,4 +1,5 @@
 <?php
+use Agp\AjaxTaxonomyFilter\Core\Agp_AjaxAbstract;
 
 class Atf_Ajax extends Agp_AjaxAbstract {
     /**

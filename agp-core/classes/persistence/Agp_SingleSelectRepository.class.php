@@ -1,4 +1,5 @@
 <?php
+namespace Agp\AjaxTaxonomyFilter\Core;
 
 class Agp_SingleSelectRepository extends Agp_RepositoryAbstract {
 

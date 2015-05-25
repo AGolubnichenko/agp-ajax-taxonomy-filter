@@ -1,6 +1,7 @@
 <?php
+namespace Agp\AjaxTaxonomyFilter\Core;
 
-abstract class Agp_ExceptionAbstract extends Exception implements Agp_ExceptionInterface {
+abstract class Agp_ExceptionAbstract extends \Exception implements Agp_ExceptionInterface {
     protected $message = 'Unknown exception';     // Exception message
     //private   $string;                            // Unknown
     protected $code    = 0;                       // User-defined exception code

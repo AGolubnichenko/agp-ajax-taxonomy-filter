@@ -1,4 +1,5 @@
 <?php
+namespace Agp\AjaxTaxonomyFilter\Core;
 
 class Agp_MySqlDb extends Agp_DbAbstract {
     
@@ -20,7 +21,7 @@ class Agp_MySqlDb extends Agp_DbAbstract {
     }   
     
     public function connect() {
-        $this->db = @new mysqli($this->host, $this->user, $this->password, $this->database);        
+        $this->db = new \mysqli($this->host, $this->user, $this->password, $this->database);        
         return $this->db->connect_errno;
     }    
     

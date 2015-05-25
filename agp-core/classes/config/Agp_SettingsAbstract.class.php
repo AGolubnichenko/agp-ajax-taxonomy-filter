@@ -1,4 +1,6 @@
 <?php
+namespace Agp\AjaxTaxonomyFilter\Core;
+
 /**
  * Settings page abstract class
  */

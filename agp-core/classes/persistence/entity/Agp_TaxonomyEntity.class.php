@@ -1,4 +1,5 @@
 <?php
+namespace Agp\AjaxTaxonomyFilter\Core;
 
 class Agp_TaxonomyEntity extends Agp_Entity {
     private $term_id;

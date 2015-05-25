@@ -1,8 +1,9 @@
 <?php
+use Agp\AjaxTaxonomyFilter\Core\Agp_MultiSelectRepository;
 
 class Atf_TaxonomyRepository extends Agp_MultiSelectRepository {
     
-    public $entityClass ='Agp_TaxonomyEntity';
+    public $entityClass ='Agp\AjaxTaxonomyFilter\Core\Agp_TaxonomyEntity';
     
     public function refreshRepository($taxonomy) {
         $data = array();                        

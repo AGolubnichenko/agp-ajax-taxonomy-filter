@@ -1,4 +1,5 @@
 <?php
+use Agp\AjaxTaxonomyFilter\Core\Agp_Entity;
 
 class Atf_WidgetEntity extends Agp_Entity {
     private $widget;

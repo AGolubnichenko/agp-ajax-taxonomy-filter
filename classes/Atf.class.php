@@ -1,4 +1,6 @@
 <?php
+use Agp\AjaxTaxonomyFilter\Core\Agp_Module;
+use Agp\AjaxTaxonomyFilter\Core\Agp_Session;
 
 class Atf extends Agp_Module {
 

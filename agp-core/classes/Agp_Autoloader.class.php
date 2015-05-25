@@ -1,4 +1,5 @@
 <?php
+namespace Agp\AjaxTaxonomyFilter\Core;
 
 class Agp_Autoloader {
 
@@ -56,6 +57,38 @@ class Agp_Autoloader {
      */
     private function autoload($class) {
         if (!class_exists($class) && !empty($this->classMap)) {
+
+            if (array_key_exists('namespaces', $this->classMap)) {
+                $parts = explode('\\', $class);
+                $className = array_pop($parts);
+
+                if (!empty($parts)) {
+                    $namespace = implode('\\', $parts);
+                    if (!empty($this->classMap['namespaces'][$namespace])) {
+                        foreach ($this->classMap['namespaces'][$namespace] as $path => $value) {
+                            $maps = array();
+                            if (is_array($value)) {
+                                $maps = $value;
+                            } else {
+                                $maps[] = $value;
+                            }
+                            
+                            foreach ($maps as $map) {
+                                if (!is_array($map)) {
+                                    $file = $path . '/' . $map .'/' . $className . '.class.php';
+                                    $file = str_replace('//', '/', $file);
+                                    $files = $this->rglob($file) ;
+                                    if (!empty($files) && is_array($files) && file_exists($files[0]) && is_file($files[0])) {
+                                        require_once $files[0];
+                                        return;
+                                    }                                                            
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            
             foreach ($this->classMap as $path => $value) {
                 $maps = array();
                 if (is_array($value)) {
@@ -64,16 +97,18 @@ class Agp_Autoloader {
                     $maps[] = $value;
                 }
                 foreach ($maps as $map) {
-                    $file = $path . '/' . $map .'/' . $class . '.class.php';
-                    $file = str_replace('//', '/', $file);
-                    $files = $this->rglob($file) ;
-                    if (!empty($files) && is_array($files) && file_exists($files[0]) && is_file($files[0])) {
-                        require_once $files[0];
-                        return;
-                    }                                    
+                    if (!is_array($map)) {
+                        $file = $path . '/' . $map .'/' . $class . '.class.php';
+                        $file = str_replace('//', '/', $file);
+                        $files = $this->rglob($file) ;
+                        if (!empty($files) && is_array($files) && file_exists($files[0]) && is_file($files[0])) {
+                            require_once $files[0];
+                            return;
+                        }                                    
+                    }
                 }
-            }
-        }        
+            }        
+        }
     }
     
     /**
