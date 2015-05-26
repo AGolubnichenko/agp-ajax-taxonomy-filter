@@ -181,14 +181,12 @@ abstract class Agp_SettingsAbstract extends Agp_ConfigAbstract {
         if ($this->getTabs()) {        
             foreach ($this->getTabs() as $k => $v) {
                 if (!empty($fields[$k])) {
+                    $options = get_option( $k );                    
                     foreach ($fields[$k]['fields'] as $dk => $dv) {
-                        $options = get_option( $k );
                         if (!empty($options)) {
                             if ( isset( $options[$dk] ) ) {
                                 $result[$k][$dk] = $options[$dk];                                
-                            } elseif ( isset ( $dv['default'] ) ) {
-                                $result[$k][$dk] = $dv['default'];
-                            }   
+                            } 
                         } else {
                             if ( isset ( $dv['default'] ) ) {
                                 $result[$k][$dk] = $dv['default'];
